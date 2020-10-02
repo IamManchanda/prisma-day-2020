@@ -4,8 +4,7 @@
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "dev": "ts-node src/index.ts"
   }
