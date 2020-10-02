@@ -8,26 +8,48 @@ datasource db {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  createdAt DateTime @default(now())
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int?
-  User      User?    @relation(fields: [authorId], references: [id])
+  id             Int              @id @default(autoincrement())
+  title          String
+  createdAt      DateTime         @default(now())
+  content        String?
+  published      Boolean          @default(false)
+  authorId       Int?
+  author         User?            @relation(fields: [authorId], references: [id])
+  CategoryToPost CategoryToPost[] @relation("PostTo_CategoryToPost")
 }
 
 model Profile {
   id     Int     @id @default(autoincrement())
   bio    String?
   userId Int     @unique
-  User   User    @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  name    String?
-  email   String   @unique
-  Post    Post[]
-  Profile Profile?
+  id             Int              @id @default(autoincrement())
+  name           String?
+  email          String           @unique
+  posts          Post[]
+  profile        Profile?
+  CategoryToPost CategoryToPost[] @relation("UserTo_CategoryToPost")
+}
+
+model Category {
+  id             Int              @id @default(autoincrement())
+  name           String?
+  CategoryToPost CategoryToPost[] @relation("CategoryTo_CategoryToPost")
+}
+
+model CategoryToPost {
+  categoryId Int
+  postId     Int
+  userId     Int?
+  createdAt  DateTime @default(now())
+  Category   Category @relation("CategoryTo_CategoryToPost", fields: [categoryId], references: [id])
+  Post       Post     @relation("PostTo_CategoryToPost", fields: [postId], references: [id])
+  User       User?    @relation("UserTo_CategoryToPost", fields: [userId], references: [id])
+
+  @@unique([categoryId, postId], name: "_CategoryToPost_AB_unique")
+  @@index([postId], name: "_CategoryToPost_B_index")
+  @@map("_CategoryToPost")
 }

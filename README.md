@@ -26,3 +26,6 @@ npm install
 ## Workshop
 
 You can find all the info for following the workshop [here](https://pris.ly/a-practical-introduction-prisma).
+
+- https://www.notion.so/2-Explore-Prisma-Client-bcd7a583c3734fd2ba22ba34d1f98408
+- https://www.notion.so/3-Data-modeling-techniques-55c63158cf7941b1a659ca3425698a34
